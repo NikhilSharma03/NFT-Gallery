@@ -13,11 +13,11 @@ app.use(bodyParser.json());
 
 // Routers
 const userRoute = require("./routes/user");
-const nftRoute = require("./routes/nft");
+// const nftRoute = require("./routes/nft");
 
 // Routes
 app.use("/api/user", userRoute);
-app.use("/api/nft", nftRoute);
+// app.use("/api/nft", nftRoute);
 
 // Connection
 let mongoURI = process.env.MONGO_ATLAS_URI;
