@@ -89,7 +89,7 @@ export const createNFT = async (req: Request, res: Response) => {
     imageURL = response.result.at(0)?.path || "";
   } catch (err) {
     return res.status(500).json({
-      message: "failed to save image to IPFS. Please try again.",
+      message: `failed to save image to IPFS. Please try again. ${err}`,
     });
   }
   if (!imageURL) {
@@ -210,7 +210,7 @@ export const updateNFTByID = async (req: Request, res: Response) => {
       imageURL = response.result.at(0)?.path || "";
     } catch (err) {
       return res.status(500).json({
-        message: `failed to save image to IPFS. Please try again.`,
+        message: `failed to save image to IPFS. Please try again. ${err}`,
       });
     }
     if (!imageURL) {
