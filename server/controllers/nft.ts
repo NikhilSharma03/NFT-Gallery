@@ -6,6 +6,7 @@ import { CustomNFTRequest } from "./../types/request";
 import NFT from "./../models/nft";
 import User from "./../models/user";
 
+// getAllNFTs fetch all the created NFTs and returns them
 export const getAllNFTs = async (req: Request, res: Response) => {
   const nfts = await NFT.find();
   res.json({
@@ -14,14 +15,15 @@ export const getAllNFTs = async (req: Request, res: Response) => {
   });
 };
 
+// getNFTByID fetch a single NFT by provided NFT ID and returns it
 export const getNFTByID = async (req: Request, res: Response) => {
   const NFTID = req.params.nftId;
-
+  // Validate ObjectID
   let isObjectID = isValidObjectId(NFTID);
   if (!isObjectID) {
     return res.status(400).json({ message: "the provided NFT id is invalid" });
   }
-
+  // Fetching single NFT by provided NFT ID
   const nft = await NFT.findById(NFTID);
   res.json({
     message: "Fetched NFT successfully",
@@ -29,16 +31,17 @@ export const getNFTByID = async (req: Request, res: Response) => {
   });
 };
 
+// getNFTsByUser fetch all the NFTs created by user by provided User wallet address and returns them
 export const getNFTsByUser = async (req: Request, res: Response) => {
   const walletAddress = req.params.walletAddress;
-  // Validating wallet address
+  // Validate wallet address
   const isWalletAddressValid = ethers.utils.isAddress(walletAddress);
   if (!isWalletAddressValid) {
     return res.status(400).json({
       message: "invalid wallet Address.",
     });
   }
-
+  // Fetching all NFTs by provided User wallet address
   const nfts = await NFT.find({ creator: walletAddress });
   res.json({
     message: "Fetched User NFTs successfully",
@@ -46,6 +49,7 @@ export const getNFTsByUser = async (req: Request, res: Response) => {
   });
 };
 
+// createNFT creates a new NFT
 export const createNFT = async (req: Request, res: Response) => {
   const request = req as CustomNFTRequest;
   const { title, description } = request.body;
@@ -72,14 +76,14 @@ export const createNFT = async (req: Request, res: Response) => {
       message: "No image found in the request. Please add an NFT image.",
     });
   }
-  // Uploading image to IPFS
+  // Connect to moralis
   const moralisAPIKey = process.env.MORALIS_API_KEY || "";
   try {
     await Moralis.start({ apiKey: moralisAPIKey });
   } catch (err) {
     return res.status(500).json({ message: "Failed to connect to Moralis" });
   }
-
+  // Uploading image to IPFS
   const imageData = Buffer.from(image.data).toString("base64");
   const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
   const imageABI = [
@@ -153,10 +157,12 @@ export const createNFT = async (req: Request, res: Response) => {
   });
 };
 
+// updateNFTByID updates a single NFT by provided NFT ID
 export const updateNFTByID = async (req: Request, res: Response) => {
   const request = req as CustomNFTRequest;
 
   const NFTID = request.params.nftId;
+  // Validate ObjectID
   let isObjectID = isValidObjectId(NFTID);
   if (!isObjectID) {
     return res.status(400).json({ message: "the provided NFT id is invalid" });
@@ -201,13 +207,14 @@ export const updateNFTByID = async (req: Request, res: Response) => {
         message: "No image found in the request. Please add an NFT image.",
       });
     }
-    // Uploading image to IPFS
+    // Connect to moralis
     const moralisAPIKey = process.env.MORALIS_API_KEY || "";
     try {
       await Moralis.start({ apiKey: moralisAPIKey });
     } catch (err) {
       return res.status(500).json({ message: "Failed to connect to Moralis" });
     }
+    // Uploading image to IPFS
     const imageData = Buffer.from(image.data).toString("base64");
     const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const imageABI = [
@@ -233,7 +240,7 @@ export const updateNFTByID = async (req: Request, res: Response) => {
     }
   }
 
-  // Update NFT fields
+  // Update NFT fields and save it
   nft.title = title;
   nft.description = description;
   nft.image = imageURL;
@@ -259,11 +266,12 @@ export const updateNFTByID = async (req: Request, res: Response) => {
   });
 };
 
+// deleteNFTByID deletes a single NFT by provided NFT ID
 export const deleteNFTByID = async (req: Request, res: Response) => {
   const request = req as CustomNFTRequest;
 
   const NFTID = request.params.nftId;
-
+  // Validate ObjectID
   let isObjectID = isValidObjectId(NFTID);
   if (!isObjectID) {
     return res.status(400).json({ message: "the provided NFT id is invalid" });

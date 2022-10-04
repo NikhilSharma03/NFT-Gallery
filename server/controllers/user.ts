@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import User from "./../models/user";
 import { Secret } from "jsonwebtoken";
 
+// signIn registers user and return authentication token
 export const signIn = async (req: Request, res: Response) => {
   const { walletAddress } = req.body;
   if (!walletAddress) {
