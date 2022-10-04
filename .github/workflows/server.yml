@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+       run:
+         working-directory: ./server/
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
@@ -19,7 +22,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: './server/package-lock.json'
     - run: npm ci
-      working-directory: ./server
     - run: npm run build
-      working-directory: ./server
