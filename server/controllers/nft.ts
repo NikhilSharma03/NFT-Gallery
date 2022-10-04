@@ -73,6 +73,13 @@ export const createNFT = async (req: Request, res: Response) => {
     });
   }
   // Uploading image to IPFS
+  const moralisAPIKey = process.env.MORALIS_API_KEY || "";
+  try {
+    await Moralis.start({ apiKey: moralisAPIKey });
+  } catch (err) {
+    return res.status(500).json({ message: "Failed to connect to Moralis" });
+  }
+
   const imageData = Buffer.from(image.data).toString("base64");
   const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
   const imageABI = [
@@ -195,6 +202,12 @@ export const updateNFTByID = async (req: Request, res: Response) => {
       });
     }
     // Uploading image to IPFS
+    const moralisAPIKey = process.env.MORALIS_API_KEY || "";
+    try {
+      await Moralis.start({ apiKey: moralisAPIKey });
+    } catch (err) {
+      return res.status(500).json({ message: "Failed to connect to Moralis" });
+    }
     const imageData = Buffer.from(image.data).toString("base64");
     const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const imageABI = [

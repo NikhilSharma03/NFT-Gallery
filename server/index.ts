@@ -27,26 +27,17 @@ app.use("/api/nft", nftRoute);
 
 // Connection
 const mongoURI = process.env.MONGO_ATLAS_URI || "";
-const moralisAPIKey = process.env.MORALIS_API_KEY || "";
 
-Moralis.start({ apiKey: moralisAPIKey })
+mongoose
+  .connect(mongoURI)
   .then(() => {
-    console.log("Connected Moralis...");
+    console.log("Connected to Database...");
 
-    mongoose
-      .connect(mongoURI)
-      .then(() => {
-        console.log("Connected to Database...");
-
-        const port = process.env.PORT || 5001;
-        app.listen(port, () => {
-          console.log(`Server is running on port ${port}...`);
-        });
-      })
-      .catch((err) => {
-        console.log("Failed to connect DB:", err);
-      });
+    const port = process.env.PORT || 5001;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}...`);
+    });
   })
   .catch((err) => {
-    console.log("Failed to connect Moralis:", err);
+    console.log("Failed to connect DB:", err);
   });
