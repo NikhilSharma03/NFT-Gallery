@@ -1,4 +1,4 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { ethers } from "ethers";
 import Moralis from "moralis";
 import { isValidObjectId } from "mongoose";
