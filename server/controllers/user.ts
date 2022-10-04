@@ -1,8 +1,10 @@
-const jwt = require("jsonwebtoken");
-const { ethers } = require("ethers");
-const User = require("./../models/user");
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { ethers } from "ethers";
+import User from "./../models/user";
+import { Secret } from "jsonwebtoken";
 
-exports.signIn = async (req, res) => {
+export const signIn = async (req: Request, res: Response) => {
   const { walletAddress } = req.body;
   if (!walletAddress) {
     return res
@@ -27,18 +29,21 @@ exports.signIn = async (req, res) => {
     try {
       await newUser.save();
     } catch (err) {
+      let message = "failed to save user";
+      if (err instanceof Error) message = err.message;
       return res
         .status(500)
-        .json({ message: "Something went wrong", error: err.message });
+        .json({ message: "Something went wrong", error: message });
     }
   }
   // JWT Token
+  const secretKey: Secret = process.env.JWT_SECRET_KEY || "";
   let jwtToken = jwt.sign(
     {
       walletAddress: walletAddress,
       expiresIn: +Date.now() + 60 * 60 * 1000,
     },
-    process.env.JWT_SECRET_KEY,
+    secretKey,
     { expiresIn: "1h" }
   );
 
