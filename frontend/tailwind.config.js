@@ -16,6 +16,9 @@ module.exports = {
       minWidth: {
         sm: "20rem",
       },
+      zIndex: {
+        2000: "2000",
+      },
     },
   },
   plugins: [require("daisyui")],

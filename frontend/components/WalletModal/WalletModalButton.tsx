@@ -1,8 +1,16 @@
 import type { NextPage } from "next";
-import { WMButton } from "./WalletModal.style";
+import { WMButton, WMButtonHead } from "./WalletModal.style";
 
-const WalletModalButton: NextPage = () => {
-  return <WMButton htmlFor="wallet-modal">Connect Wallet</WMButton>;
+type Props = {
+  children: React.ReactNode;
+};
+
+const WalletModalButton: NextPage<Props> = ({ children }) => {
+  return (
+    <WMButton htmlFor="wallet-modal">
+      <WMButtonHead>{children}</WMButtonHead>
+    </WMButton>
+  );
 };
 
 export default WalletModalButton;

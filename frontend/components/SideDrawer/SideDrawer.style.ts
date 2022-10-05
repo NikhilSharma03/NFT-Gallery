@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div.attrs({
+export const SDContainer = styled.div.attrs({
   className: "drawer",
 })``;
 
@@ -21,7 +21,8 @@ export const SDSideLabel = styled.label.attrs({
 })``;
 
 export const SDSideList = styled.ul.attrs({
-  className: "menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content",
+  className:
+    "menu p-4 pt-10 overflow-y-auto w-80 bg-base-100 text-base-content items-center",
 })``;
 
 export const SDSideListItem = styled.li.attrs({

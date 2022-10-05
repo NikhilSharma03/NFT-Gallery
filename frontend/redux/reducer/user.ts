@@ -25,7 +25,7 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(connectWallet.fulfilled, (state, { payload }) => {
-      state.userWalletAccount = payload;
+      state.userWalletAccount = payload ? payload : "";
       state.isWalletConnected = true;
       state.loading = false;
     });

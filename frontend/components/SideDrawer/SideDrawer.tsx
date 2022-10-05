@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import {
-  Container,
+  SDContainer,
   SDContent,
   SDInput,
   SDSide,
@@ -10,21 +10,31 @@ import {
   SDSideListItem,
 } from "./SideDrawer.style";
 import WalletModalButton from "../WalletModal/WalletModalButton";
+import useAppSelector from "../../hooks/useAppSelector";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const SideDrawer: NextPage<Props> = ({ children }) => {
+  const isWalletConnected = useAppSelector(
+    (state) => state.user.isWalletConnected
+  );
+  const userWalletAccount = useAppSelector(
+    (state) => state.user.userWalletAccount
+  );
+
   return (
-    <Container>
+    <SDContainer>
       <SDInput id="my-drawer" type="checkbox" />
       <SDContent>{children}</SDContent>
       <SDSide>
         <SDSideLabel htmlFor="my-drawer" />
         <SDSideList>
           <SDSideListItem>
-            <WalletModalButton />
+            <WalletModalButton>
+              {isWalletConnected ? userWalletAccount : "Connect Wallet"}
+            </WalletModalButton>
           </SDSideListItem>
           <SDSideListItem>
             <Link href="/gallery">Gallery</Link>
@@ -34,7 +44,7 @@ const SideDrawer: NextPage<Props> = ({ children }) => {
           </SDSideListItem>
         </SDSideList>
       </SDSide>
-    </Container>
+    </SDContainer>
   );
 };
 

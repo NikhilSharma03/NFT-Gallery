@@ -10,8 +10,16 @@ import {
   NavItem,
 } from "./Navbar.style";
 import WalletModalButton from "../WalletModal/WalletModalButton";
+import useAppSelector from "../../hooks/useAppSelector";
 
 const Navbar = () => {
+  const isWalletConnected = useAppSelector(
+    (state) => state.user.isWalletConnected
+  );
+  const userWalletAccount = useAppSelector(
+    (state) => state.user.userWalletAccount
+  );
+
   return (
     <Container>
       <LogoContainer>
@@ -31,7 +39,9 @@ const Navbar = () => {
             <Link href="/create">Create</Link>
           </NavItem>
           <NavItem>
-            <WalletModalButton />
+            <WalletModalButton>
+              {isWalletConnected ? userWalletAccount : "Connect Wallet"}
+            </WalletModalButton>
           </NavItem>
         </NavList>
       </NavContainer>
