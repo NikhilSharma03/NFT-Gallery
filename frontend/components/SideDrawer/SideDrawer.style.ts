@@ -24,7 +24,9 @@ export const SDSideList = styled.ul.attrs({
   className: "menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content",
 })``;
 
-export const SDSideListItem = styled.li`
+export const SDSideListItem = styled.li.attrs({
+  className: "mb-2",
+})`
   a:active {
     background-color: transparent;
   }

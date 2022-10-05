@@ -9,6 +9,7 @@ import {
   NavList,
   NavItem,
 } from "./Navbar.style";
+import WalletModalButton from "../WalletModal/WalletModalButton";
 
 const Navbar = () => {
   return (
@@ -28,6 +29,9 @@ const Navbar = () => {
           </NavItem>
           <NavItem>
             <Link href="/create">Create</Link>
+          </NavItem>
+          <NavItem>
+            <WalletModalButton />
           </NavItem>
         </NavList>
       </NavContainer>

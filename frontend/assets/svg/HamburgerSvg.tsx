@@ -2,18 +2,10 @@ import { NextPage } from "next";
 
 const HamburgerSvg: NextPage = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      className="inline-block w-5 h-5 stroke-current"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M4 6h16M4 12h16M4 18h16"
-      ></path>
+    <svg viewBox="0 0 100 80" width="25" height="25">
+      <rect width="100" height="10" fill="#ddd"></rect>
+      <rect y="30" width="100" height="10" fill="#ddd"></rect>
+      <rect y="60" width="100" height="10" fill="#ddd"></rect>
     </svg>
   );
 };

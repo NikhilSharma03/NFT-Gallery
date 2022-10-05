@@ -9,6 +9,7 @@ import {
   SDSideList,
   SDSideListItem,
 } from "./SideDrawer.style";
+import WalletModalButton from "../WalletModal/WalletModalButton";
 
 type Props = {
   children: React.ReactNode;
@@ -22,6 +23,9 @@ const SideDrawer: NextPage<Props> = ({ children }) => {
       <SDSide>
         <SDSideLabel htmlFor="my-drawer" />
         <SDSideList>
+          <SDSideListItem>
+            <WalletModalButton />
+          </SDSideListItem>
           <SDSideListItem>
             <Link href="/gallery">Gallery</Link>
           </SDSideListItem>
