@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import {
   NFTButton,
@@ -9,6 +10,8 @@ import {
   NFTText,
 } from "./../../styles/NFT.style";
 import WalletModalBody from "../../components/WalletModal/WalletModalBody";
+import UpdateNFTModal from "../../components/UpdateNFTModal/UpdateNFTModal";
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 
 const DATA = {
   _id: "633d7cbc3fe0711d68657f5e",
@@ -25,8 +28,20 @@ const NFT: NextPage = () => {
   const router = useRouter();
   const { id: nftID } = router.query;
 
+  const [showUpdateNFTModal, setShowUpdateNFTModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
   return (
     <div>
+      {showUpdateNFTModal && (
+        <UpdateNFTModal closeModal={() => setShowUpdateNFTModal(false)} />
+      )}
+      {showConfirmModal && (
+        <ConfirmModal
+          deleteNFT={() => {}}
+          closeModal={() => setShowConfirmModal(false)}
+        />
+      )}
       <Head>
         <title>NFT Portrait | NFT</title>
       </Head>
@@ -38,8 +53,12 @@ const NFT: NextPage = () => {
         <NFTText>{DATA.description}</NFTText>
         <NFTText>Creator: {DATA.creator}</NFTText>
         <NFTButtonContainer>
-          <NFTButton>Update</NFTButton>
-          <NFTButton>Delete</NFTButton>
+          <NFTButton onClick={() => setShowUpdateNFTModal(true)}>
+            Update
+          </NFTButton>
+          <NFTButton onClick={() => setShowConfirmModal(true)}>
+            Delete
+          </NFTButton>
         </NFTButtonContainer>
       </NFTContainer>
       <WalletModalBody />
