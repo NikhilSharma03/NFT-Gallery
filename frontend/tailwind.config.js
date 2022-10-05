@@ -19,6 +19,9 @@ module.exports = {
       zIndex: {
         2000: "2000",
       },
+      gridTemplateRows: {
+        5: "repeat(8, minmax(0, 20rem))",
+      },
     },
   },
   plugins: [require("daisyui")],
