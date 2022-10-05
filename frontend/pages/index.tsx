@@ -1,6 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 import WalletModalBody from "../components/WalletModal/WalletModalBody";
+import { HomeButton, HomeContainer, HomeHead } from "./../styles/Home.style";
 
 const Home: NextPage = () => {
   return (
@@ -8,9 +11,13 @@ const Home: NextPage = () => {
       <Head>
         <title>NFT Portrait | Home</title>
       </Head>
-      <div>
-        <WalletModalBody />
-      </div>
+      <HomeContainer>
+        <HomeHead>Create and List your own NFT</HomeHead>
+        <HomeButton>
+          <Link href="/gallery">Explore</Link>
+        </HomeButton>
+      </HomeContainer>
+      <WalletModalBody />
     </div>
   );
 };
