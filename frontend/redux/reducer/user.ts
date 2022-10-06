@@ -4,6 +4,7 @@ import { connectWallet } from "../action/user";
 const initialState = {
   userWalletAccount: "",
   isWalletConnected: false,
+  authToken: "",
   loading: false,
   error: "",
 };
@@ -18,6 +19,7 @@ export const userSlice = createSlice({
     disconnectWallet: (state) => {
       state.isWalletConnected = false;
       state.userWalletAccount = "";
+      state.authToken = "";
     },
   },
   extraReducers: (builder) => {
@@ -25,8 +27,9 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(connectWallet.fulfilled, (state, { payload }) => {
-      state.userWalletAccount = payload ? payload : "";
+      state.userWalletAccount = payload ? payload.account : "";
       state.isWalletConnected = true;
+      state.authToken = payload ? payload.authToken : "";
       state.loading = false;
     });
     builder.addCase(connectWallet.rejected, (state, action) => {

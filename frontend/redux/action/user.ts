@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const connectWallet = createAsyncThunk(
   "user/connectWallet",
@@ -14,7 +15,15 @@ export const connectWallet = createAsyncThunk(
       });
       let account: string = accounts[0];
       if (account !== "") {
-        return account;
+        // Signin using account address
+        const data = await axios.post(
+          `${process.env.BACKEND_API_URL}/api/user/signin`,
+          {
+            walletAddress: account,
+          }
+        );
+        const authToken: string = data.data.token;
+        return { account, authToken };
       }
     } catch (err) {
       return rejectWithValue("Failed to connect to MetaMask");

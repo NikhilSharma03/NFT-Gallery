@@ -39,9 +39,11 @@ const SideDrawer: NextPage<Props> = ({ children }) => {
           <SDSideListItem>
             <Link href="/gallery">Gallery</Link>
           </SDSideListItem>
-          <SDSideListItem>
-            <Link href="/create">Create</Link>
-          </SDSideListItem>
+          {isWalletConnected && (
+            <SDSideListItem>
+              <Link href="/create">Create</Link>
+            </SDSideListItem>
+          )}
         </SDSideList>
       </SDSide>
     </SDContainer>

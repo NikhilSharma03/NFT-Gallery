@@ -14,6 +14,10 @@ export const HomeHead = styled.h1`
   margin-bottom: 2rem;
 `;
 
+export const HomeButtonContainer = styled.div.attrs({
+  className: "flex",
+})``;
+
 export const HomeButton = styled.button.attrs({
-  className: "btn btn-primary",
+  className: "btn btn-primary m-2",
 })``;

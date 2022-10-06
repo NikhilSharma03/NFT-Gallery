@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  env: {
+    BACKEND_API_URL: process.env.BACKEND_API_URL,
+  },
 };
 
 module.exports = nextConfig;
