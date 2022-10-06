@@ -7,29 +7,26 @@ import {
   GalleryNFTCardContainer,
 } from "./../styles/Gallery.style";
 import NFTCard from "../components/NFTCard/NFTCard";
+import axios from "axios";
+import { NFT } from "./../types/nft";
 
-const DATA = [
-  {
-    _id: "633d7cbc3fe0711d68657f5e",
-    title: "Wallpaper",
-    description: "Cast",
-    image:
-      "https://ipfs.moralis.io:2053/ipfs/QmZbV8pQauUW7415xaLZv7KrWpbNJiZShT8b4vP1n9S6Qm/nft-gallery/1664974006224-35210220",
-    creator: "0xdBF8AE832809D6B1a933417c1F06c598b3c7306c",
-    createdAt: "2022-10-05T12:46:21.769Z",
-  },
-];
+type Props = {
+  failed: boolean;
+  nfts: NFT[];
+};
 
-const Home: NextPage = () => {
+const Gallery: NextPage<Props> = ({ nfts, failed }) => {
   return (
     <div>
       <Head>
         <title>NFT Portrait | Gallery</title>
       </Head>
       <GalleryContainer>
-        {DATA.length > 0 ? (
+        {failed ? (
+          <GalleryHead>Failed to fetch NFT. Please try again.</GalleryHead>
+        ) : nfts.length > 0 ? (
           <GalleryNFTCardContainer>
-            {DATA.map((nft) => (
+            {nfts.map((nft) => (
               <NFTCard
                 key={nft._id}
                 id={nft._id}
@@ -48,4 +45,18 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export const getStaticProps = async () => {
+  try {
+    const data = await axios.get(`${process.env.BACKEND_API_URL}/api/nft`);
+    if (!data) {
+      return { props: { failed: true, nfts: [] } };
+    }
+    return {
+      props: { failed: false, nfts: data.data.nfts ? data.data.nfts : [] },
+    };
+  } catch (err) {
+    return { props: { failed: true, nfts: [] } };
+  }
+};
+
+export default Gallery;
