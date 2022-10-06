@@ -40,6 +40,11 @@ const Navbar = () => {
               <Link href="/create">Create</Link>
             </NavItem>
           )}
+          {isWalletConnected && (
+            <NavItem>
+              <Link href="/profile">MyNFT</Link>
+            </NavItem>
+          )}
           <NavItem>
             <WalletModalButton>
               {isWalletConnected ? userWalletAccount : "Connect Wallet"}

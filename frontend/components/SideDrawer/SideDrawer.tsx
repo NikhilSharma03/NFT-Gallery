@@ -44,6 +44,11 @@ const SideDrawer: NextPage<Props> = ({ children }) => {
               <Link href="/create">Create</Link>
             </SDSideListItem>
           )}
+          {isWalletConnected && (
+            <SDSideListItem>
+              <Link href="/profile">MyNFT</Link>
+            </SDSideListItem>
+          )}
         </SDSideList>
       </SDSide>
     </SDContainer>
