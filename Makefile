@@ -32,5 +32,5 @@ build-ui:
 	cd frontend; npm run build; cd ..
 
 ## Run frontend lint
-lint-ui:
+run-ui-lint:
 	cd frontend; npm run lint; cd ..
