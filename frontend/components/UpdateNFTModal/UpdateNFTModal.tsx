@@ -80,6 +80,7 @@ const UpdateNFTModal: NextPage<Props> = ({
       })
       .catch((err) => {
         setLoading(false);
+        alert(err.response.data.message);
       });
   };
 
