@@ -88,7 +88,7 @@ export const createNFT = async (req: Request, res: Response) => {
   const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
   const imageABI = [
     {
-      path: `nft-gallery/${uniqueImageName}`,
+      path: `nft-portrait/${uniqueImageName}`,
       content: imageData,
     },
   ];
@@ -221,7 +221,7 @@ export const updateNFTByID = async (req: Request, res: Response) => {
     const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const imageABI = [
       {
-        path: `nft-gallery/${uniqueImageName}`,
+        path: `nft-portrait/${uniqueImageName}`,
         content: imageData,
       },
     ];
