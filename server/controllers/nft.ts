@@ -42,7 +42,7 @@ export const getNFTsByUser = async (req: Request, res: Response) => {
     });
   }
   // Fetching all NFTs by provided User wallet address
-  const nfts = await NFT.find({ creator: walletAddress });
+  const nfts = await NFT.find({ creator: walletAddress.toLowerCase() });
   res.json({
     message: "Fetched User NFTs successfully",
     nfts,
@@ -88,7 +88,7 @@ export const createNFT = async (req: Request, res: Response) => {
   const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
   const imageABI = [
     {
-      path: `nft-gallery/${uniqueImageName}`,
+      path: `nft-portrait/${uniqueImageName}`,
       content: imageData,
     },
   ];
@@ -112,7 +112,7 @@ export const createNFT = async (req: Request, res: Response) => {
   const newNFT = new NFT({
     title: title,
     description: description,
-    creator: creatorWalletAddress,
+    creator: creatorWalletAddress?.toLowerCase(),
     image: imageURL,
   });
 
@@ -191,7 +191,9 @@ export const updateNFTByID = async (req: Request, res: Response) => {
     });
   }
   // Check if has authority
-  if (nft.creator !== creatorWalletAddress) {
+  if (
+    nft.creator.toLowerCase() !== String(creatorWalletAddress).toLowerCase()
+  ) {
     return res.status(401).json({
       message: "Not authorized.",
     });
@@ -219,7 +221,7 @@ export const updateNFTByID = async (req: Request, res: Response) => {
     const uniqueImageName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const imageABI = [
       {
-        path: `nft-gallery/${uniqueImageName}`,
+        path: `nft-portrait/${uniqueImageName}`,
         content: imageData,
       },
     ];
@@ -294,7 +296,9 @@ export const deleteNFTByID = async (req: Request, res: Response) => {
     });
   }
   // Check if has authority
-  if (nft.creator !== creatorWalletAddress) {
+  if (
+    nft.creator.toLowerCase() !== String(creatorWalletAddress).toLowerCase()
+  ) {
     return res.status(401).json({
       message: "Not authorized.",
     });

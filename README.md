@@ -1,3 +1,3 @@
-# NFT-Gallery
+# NFT-Portrait
 
-> Create your own NFT and list them 
+> Create your own NFT and list them
