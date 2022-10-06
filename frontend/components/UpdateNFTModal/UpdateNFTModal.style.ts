@@ -43,10 +43,16 @@ export const UNInput = styled.input.attrs({
   className: "input input-bordered input-md w-full",
 })``;
 
-export const UpdateNFTImgBtnContainer = styled.div.attrs({
+export const UNImgBtnContainer = styled.div.attrs({
   className: "mb-4 flex items-center",
 })``;
 
-export const UpdateNFTImgBtn = styled.button.attrs({
+export const UNImgBtn = styled.label.attrs({
   className: "btn btn-primary mr-2",
+})``;
+
+export const UNAvatar = styled.div.attrs({ className: "avatar" })``;
+
+export const UNAvatarRounded = styled.div.attrs({
+  className: "w-12 rounded-full",
 })``;

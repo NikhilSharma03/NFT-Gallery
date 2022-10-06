@@ -34,7 +34,13 @@ const NFT: NextPage = () => {
   return (
     <div>
       {showUpdateNFTModal && (
-        <UpdateNFTModal closeModal={() => setShowUpdateNFTModal(false)} />
+        <UpdateNFTModal
+          title={DATA.title}
+          description={DATA.description}
+          image={DATA.image}
+          id={DATA._id}
+          closeModal={() => setShowUpdateNFTModal(false)}
+        />
       )}
       {showConfirmModal && (
         <ConfirmModal
