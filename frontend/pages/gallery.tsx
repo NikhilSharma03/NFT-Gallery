@@ -45,7 +45,7 @@ const Gallery: NextPage<Props> = ({ nfts, failed }) => {
   );
 };
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   try {
     const data = await axios.get(`${process.env.BACKEND_API_URL}/api/nft`);
     if (!data) {
