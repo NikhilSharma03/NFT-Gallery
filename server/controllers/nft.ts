@@ -42,7 +42,7 @@ export const getNFTsByUser = async (req: Request, res: Response) => {
     });
   }
   // Fetching all NFTs by provided User wallet address
-  const nfts = await NFT.find({ creator: walletAddress });
+  const nfts = await NFT.find({ creator: walletAddress.toLowerCase() });
   res.json({
     message: "Fetched User NFTs successfully",
     nfts,
@@ -112,7 +112,7 @@ export const createNFT = async (req: Request, res: Response) => {
   const newNFT = new NFT({
     title: title,
     description: description,
-    creator: creatorWalletAddress,
+    creator: creatorWalletAddress?.toLowerCase(),
     image: imageURL,
   });
 
