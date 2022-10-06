@@ -8,6 +8,12 @@ export const NFTContainer = styled.div`
   align-items: center;
 `;
 
+export const NFTHead = styled.h1.attrs({
+  className: "mt-4 text-center font-bold",
+})`
+  font-size: 2rem;
+`;
+
 export const NFTImageContainer = styled.figcaption`
   width: 40rem;
   height: 25rem;

@@ -191,7 +191,9 @@ export const updateNFTByID = async (req: Request, res: Response) => {
     });
   }
   // Check if has authority
-  if (nft.creator !== creatorWalletAddress) {
+  if (
+    nft.creator.toLowerCase() !== String(creatorWalletAddress).toLowerCase()
+  ) {
     return res.status(401).json({
       message: "Not authorized.",
     });
@@ -294,7 +296,9 @@ export const deleteNFTByID = async (req: Request, res: Response) => {
     });
   }
   // Check if has authority
-  if (nft.creator !== creatorWalletAddress) {
+  if (
+    nft.creator.toLowerCase() !== String(creatorWalletAddress).toLowerCase()
+  ) {
     return res.status(401).json({
       message: "Not authorized.",
     });

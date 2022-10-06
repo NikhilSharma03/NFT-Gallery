@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextPage } from "next";
 import { useState } from "react";
 import {
@@ -16,6 +17,9 @@ import {
   UNAvatar,
   UNAvatarRounded,
 } from "./UpdateNFTModal.style";
+import useAppSelector from "./../../hooks/useAppSelector";
+import LoadingModal from "./../../components/Loading/Loading";
+import { useRouter } from "next/router";
 
 type Props = {
   title: string;
@@ -32,11 +36,16 @@ const UpdateNFTModal: NextPage<Props> = ({
   image,
   title,
 }) => {
+  const router = useRouter();
+
   const [inputTitle, setTitle] = useState(title);
   const [inputDescription, setDescription] = useState(description);
   const [updatedImage, setUpdatedImage] = useState<any>(null);
   const [imagePreview, setImagePreview] = useState<any>(null);
   const [hasUpdatedImage, setHasUpdatedImage] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const authToken = useAppSelector((state) => state.user.authToken);
 
   const onImageUploadHandler = (files: FileList | null) => {
     if (files) {
@@ -47,60 +56,90 @@ const UpdateNFTModal: NextPage<Props> = ({
   };
 
   const onUpdateNFTHandler = () => {
-    console.log(inputTitle, inputDescription, updatedImage, hasUpdatedImage);
+    if (
+      inputTitle.trim().length === 0 ||
+      inputDescription.trim().length === 0
+    ) {
+      alert("Invalid input");
+      return;
+    }
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("title", inputTitle);
+    formData.append("description", inputDescription);
+    formData.append("hasUpdatedImage", `${hasUpdatedImage}`);
+    formData.append("image", updatedImage);
+
+    axios
+      .patch(`${process.env.BACKEND_API_URL}/api/nft/${id}`, formData, {
+        headers: { token: `Bearer ${authToken}` },
+      })
+      .then((res) => {
+        setLoading(false);
+        router.replace("/gallery");
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
   };
 
+  if (loading) {
+    return <LoadingModal />;
+  }
+
   return (
-    <UNContainer>
-      <UNOverlay />
-      <UNMain>
-        <UNBody>
-          <UNHead>Update</UNHead>
-          {/* Update Form */}
-          <UNInputContainer>
-            <UNInputLabel>
-              <span>Title</span>
-              <UNInput
-                type="text"
-                placeholder="Type here"
-                value={inputTitle}
-                onChange={(e) => setTitle(e.target.value)}
+    <>
+      <UNContainer>
+        <UNOverlay />
+        <UNMain>
+          <UNBody>
+            <UNHead>Update</UNHead>
+            {/* Update Form */}
+            <UNInputContainer>
+              <UNInputLabel>
+                <span>Title</span>
+                <UNInput
+                  type="text"
+                  placeholder="Type here"
+                  value={inputTitle}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </UNInputLabel>
+            </UNInputContainer>
+            <UNInputContainer>
+              <UNInputLabel>
+                <span>Description</span>
+                <UNInput
+                  type="text"
+                  placeholder="Type here"
+                  value={inputDescription}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </UNInputLabel>
+            </UNInputContainer>
+            <UNImgBtnContainer>
+              <UNImgBtn htmlFor="updatedImage">Upload Image</UNImgBtn>
+              <input
+                id="updatedImage"
+                accept=".png,.jpg,.jpeg"
+                type="file"
+                className="hidden"
+                onChange={(e) => onImageUploadHandler(e.target.files)}
               />
-            </UNInputLabel>
-          </UNInputContainer>
-          <UNInputContainer>
-            <UNInputLabel>
-              <span>Description</span>
-              <UNInput
-                type="text"
-                placeholder="Type here"
-                value={inputDescription}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </UNInputLabel>
-          </UNInputContainer>
-          <UNImgBtnContainer>
-            <UNImgBtn htmlFor="updatedImage">Upload Image</UNImgBtn>
-            <input
-              id="updatedImage"
-              accept=".png,.jpg,.jpeg"
-              type="file"
-              className="hidden"
-              onChange={(e) => onImageUploadHandler(e.target.files)}
-            />
-            <UNAvatar>
-              <UNAvatarRounded>
-                <img src={imagePreview ? imagePreview : image} alt="img" />
-              </UNAvatarRounded>
-            </UNAvatar>
-          </UNImgBtnContainer>
-          <UNBtnContainer>
-            <UNBtn onClick={onUpdateNFTHandler}>Update</UNBtn>
-            <UNBtn onClick={closeModal}>Close</UNBtn>
-          </UNBtnContainer>
-        </UNBody>
-      </UNMain>
-    </UNContainer>
+              <UNAvatar>
+                <UNAvatarRounded>
+                  <img src={imagePreview ? imagePreview : image} alt="img" />
+                </UNAvatarRounded>
+              </UNAvatar>
+            </UNImgBtnContainer>
+            <UNBtnContainer>
+              <UNBtn onClick={onUpdateNFTHandler}>Update</UNBtn>
+              <UNBtn onClick={closeModal}>Close</UNBtn>
+            </UNBtnContainer>
+          </UNBody>
+        </UNMain>
+      </UNContainer>
+    </>
   );
 };
 
