@@ -9,6 +9,7 @@ export const ProfileHead = styled.h1.attrs({
   className: "mt-4 text-center font-bold",
 })`
   font-size: 2rem;
+  color: #ddd;
 `;
 
 export const ProfileAdd = styled.h1.attrs({
@@ -21,6 +22,8 @@ export const ProfileAdd = styled.h1.attrs({
   margin: 0 auto;
   margin-bottom: 1rem;
   font-size: 1rem;
+  color: #ddd;
+  border: 1px solid #444;
 `;
 
 export const ProfileNFTCardContainer = styled.div.attrs({
