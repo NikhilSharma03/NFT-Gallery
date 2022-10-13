@@ -16,7 +16,9 @@ export const WMLabel = styled.label.attrs({
 
 export const WMBoxLabel = styled.label.attrs({
   className: "modal-box relative",
-})``;
+})`
+  background: #222;
+`;
 
 export const WMCard = styled.div.attrs({
   className: "card w-full mb-3 bg-neutral text-neutral-content cursor-pointer",
@@ -34,4 +36,6 @@ export const WMDBtn = styled.button.attrs({
 
 export const WMConnectedHead = styled.h1.attrs({
   className: "mt-4 text-xl overflow-hidden text-ellipsis mb-5",
-})``;
+})`
+  color: #ddd;
+`;

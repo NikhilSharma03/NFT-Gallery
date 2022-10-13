@@ -9,6 +9,7 @@ export const GalleryHead = styled.h1.attrs({
   className: "mt-4 text-center font-bold",
 })`
   font-size: 2rem;
+  color: #ddd;
 `;
 
 export const GalleryNFTCardContainer = styled.div.attrs({

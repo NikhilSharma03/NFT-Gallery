@@ -11,6 +11,7 @@ export const HomeHead = styled.h1`
   font-size: 3.5rem;
   text-align: center;
   padding: 0 1rem;
+  color: #ddd;
   margin-bottom: 2rem;
 `;
 

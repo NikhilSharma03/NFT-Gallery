@@ -54,15 +54,18 @@ const NFTPage: NextPage = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (nftID) {
       axios
         .get(`${process.env.BACKEND_API_URL}/api/nft/${nftID}`)
         .then((res) => {
           if (res.data.nft) {
             setNFTData(res.data.nft);
+            setLoading(false);
             setError("");
           } else {
             setError("No NFT found");
+            setLoading(false);
           }
         })
         .catch((err) => {
@@ -100,8 +103,8 @@ const NFTPage: NextPage = () => {
             <NFTImageContainer>
               <img src={nftData ? nftData.image : ""} alt="image" />
             </NFTImageContainer>
-            <NFTText>{nftData ? nftData.title : ""}</NFTText>
-            <NFTText>{nftData ? nftData.description : ""}</NFTText>
+            <NFTText>Title: {nftData ? nftData.title : ""}</NFTText>
+            <NFTText>Description: {nftData ? nftData.description : ""}</NFTText>
             <NFTText>Creator: {nftData ? nftData.creator : ""}</NFTText>
             {isWalletConnected &&
               nftData?.creator.toLowerCase() ===

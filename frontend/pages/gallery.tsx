@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import WalletModalBody from "../components/WalletModal/WalletModalBody";
 import {
@@ -9,15 +10,31 @@ import {
 import NFTCard from "../components/NFTCard/NFTCard";
 import axios from "axios";
 import { NFT } from "./../types/nft";
+import LoadingModal from "../components/Loading/Loading";
 
-type Props = {
-  failed: boolean;
-  nfts: NFT[];
-};
+const Gallery: NextPage = () => {
+  const [nfts, setNFTs] = useState<NFT[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
 
-const Gallery: NextPage<Props> = ({ nfts, failed }) => {
+  useEffect(() => {
+    axios
+      .get(`${process.env.BACKEND_API_URL}/api/nft`)
+      .then((data) => {
+        const nftData: NFT[] = data.data.nfts ? data.data.nfts : [];
+        setNFTs(nftData);
+        setFailed(false);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setFailed(true);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div>
+      {loading && <LoadingModal />}
       <Head>
         <title>NFT Portrait | Gallery</title>
       </Head>
@@ -43,20 +60,6 @@ const Gallery: NextPage<Props> = ({ nfts, failed }) => {
       <WalletModalBody />
     </div>
   );
-};
-
-export const getServerSideProps = async () => {
-  try {
-    const data = await axios.get(`${process.env.BACKEND_API_URL}/api/nft`);
-    if (!data) {
-      return { props: { failed: true, nfts: [] } };
-    }
-    return {
-      props: { failed: false, nfts: data.data.nfts ? data.data.nfts : [] },
-    };
-  } catch (err) {
-    return { props: { failed: true, nfts: [] } };
-  }
 };
 
 export default Gallery;

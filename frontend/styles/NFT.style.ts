@@ -12,6 +12,7 @@ export const NFTHead = styled.h1.attrs({
   className: "mt-4 text-center font-bold",
 })`
   font-size: 2rem;
+  color: #ddd;
 `;
 
 export const NFTImageContainer = styled.figcaption`
@@ -20,6 +21,7 @@ export const NFTImageContainer = styled.figcaption`
   border-radius: 1rem;
   overflow: hidden;
   margin-bottom: 3rem;
+  border: 1px solid #ddd;
 
   img {
     width: 100%;
@@ -37,6 +39,12 @@ export const NFTText = styled.h2.attrs({ className: "" })`
   word-break: break-word;
   max-height: 5rem;
   overflow-y: auto;
+  color: #ddd;
+  width: fit-content;
+  background: #000;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #444;
 
   &::-webkit-scrollbar {
     width: 5px;
